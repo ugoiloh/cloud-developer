@@ -29,6 +29,33 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   /**************************************************************************** */
 
+  // regex to verify image_url format
+  const image_url_pattern = '(https?:\/\/.*\.(?:jpeg|jpg|gif|png|svg))'
+
+  app.get("/filteredimage", async (req, res) => {
+    let { image_url } = req.query;
+    console.log(image_url)
+    // check imageUrl is valid
+    if (!image_url.match(image_url_pattern) ) {
+      return res.status(400).send(`A valid image url is required`);
+    }
+    try 
+    {     
+      await filterImageFromURL(image_url)
+      .then( filtered_image_url => 
+        {
+          res.status(200).sendFile(filtered_image_url, () => {
+            deleteLocalFiles([filtered_image_url]);
+            }
+          );
+        }
+     )
+    }
+    catch (error) {
+      console.log(error)
+      res.status(422).send(`Error in parsing ${image_url}`);
+    }
+  });
   //! END @TODO1
   
   // Root Endpoint
