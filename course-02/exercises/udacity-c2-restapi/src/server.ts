@@ -15,7 +15,7 @@ import { V0MODELS } from './controllers/v0/model.index';
   const port = process.env.PORT || 8080; // default port to listen
   
   app.use(bodyParser.json());
-
+ 
   //CORS Should be restricted
   app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:8100");

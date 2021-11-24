@@ -99,9 +99,9 @@ import { Car, cars as cars_list } from './cars';
       // respond with an error if not
       return res.status(400).send(`id is required`);
     }
-
+  
     // try to find the car by id
-    const car = cars.filter((car) => car.id == id);
+    const car = cars.filter((car) => car.id == Number(id));
 
     // respond not found, if we do not have this id
     if(car && car.length === 0) {
